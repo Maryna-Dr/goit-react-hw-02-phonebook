@@ -1,4 +1,7 @@
 import { Component } from 'react';
+import PT from 'prop-types';
+
+import css from './Form.module.css';
 
 export class Form extends Component {
   state = {
@@ -15,7 +18,7 @@ export class Form extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
-    this.props.onSumbit(this.state);
+    this.props.onSubmit(this.state);
     this.resetForm();
   };
 
@@ -28,10 +31,11 @@ export class Form extends Component {
     const { handleInputChange, handleFormSubmit } = this;
 
     return (
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="">
+      <form className={css.phonebook} onSubmit={handleFormSubmit}>
+        <label className={css.label}>
           Name
           <input
+            className={css.field}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -41,9 +45,10 @@ export class Form extends Component {
             required
           />
         </label>
-        <label htmlFor="">
+        <label className={css.label}>
           Phone number
           <input
+            className={css.field}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -53,10 +58,16 @@ export class Form extends Component {
             required
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button className={css.btn} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }
 }
+
+Form.propTypes = {
+  onSubmit: PT.func.isRequired,
+};
 
 export default Form;
